@@ -1,0 +1,49 @@
+body {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+h1 {
+  color: rgb(177, 15, 15);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(177, 15, 15);
+  padding: 10px;
+  padding-right: 50%;
+}
+
+nav a {
+  color: white;
+}
+
+#cardBody {
+  background-color: rgb(228, 228, 228);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+}
+
+#cardTitle {
+  font-family: sans-serif;
+  font-weight: 700;
+  color: rgb(177, 15, 15);
+}
+
+#cardText {
+  font-family: sans-serif;
+  font-weight: 100;
+  color: rgb(177, 15, 15);
+}
+
+#cardScore {
+  font-family: sans-serif;
+  font-weight: 900;
+  background-color: yellowgreen;
+  max-width: fit-content;
+  padding: 10px;
+  border-radius: 100px;
+  color: white;
+}
