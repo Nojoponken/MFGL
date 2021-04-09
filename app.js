@@ -38,12 +38,19 @@ class flashGame {
   }
 }
 let game = [];
+let gameForm = document.querySelector("#gameForm");
+let gfTitle = document.querySelector("#title");
+let gfDesc = document.querySelector("#description");
+let gfRating = document.querySelector("#rating");
 
-game.push(new flashGame("Drakens Värld", "Det e ett bra spel asså"));
-game.push(
-  new flashGame("Grow island", "Ngl de e ganska bra asså, lite grindigt")
-);
-game.push(new flashGame("Impossible Quiz", "coolt"));
+gameForm.addEventListener("submit", (e) =>){
+  if(gfTitle.value.trim() === "" || gfDesc.value.trim() === "" || gfRating.value.trim() === ""){    
+    return;
+  }
+  game.push(new flashGame(gfTitle.value.trim(), gfDesc.value.trim()));
+  gfTitle.value = "";
+  gfDesc.value = "";
+}
 
 game.forEach((flashGame) => {
   flashGame.updateAverageRating();
