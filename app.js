@@ -1,13 +1,9 @@
 "use strict";
-
-const LSKG = "app.games";
+const LSKG = "app.game";
 
 let game = JSON.parse(localStorage.getItem(LSKG)) || [];
 
-game.forEach((element) => {
-  element.updateAverageRating();
-  element.generateGameCard();
-});
+updateGames();
 
 let gameForm = document.querySelector("#gameForm");
 let gfTitle = document.querySelector("#title");
@@ -37,9 +33,9 @@ gameForm.addEventListener("submit", (e) => {
 
 function updateGames() {
   save();
-  game.forEach((element) => {
-    element.updateAverageRating();
-    element.generateGameCard();
+  game.forEach((fg) => {
+    fg.updateAverageRating();
+    fg.generateGameCard();
   });
 }
 

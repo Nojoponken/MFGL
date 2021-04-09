@@ -1,5 +1,5 @@
 // flashGame klassen var ivägen så jag stoppade den här istället
-class flashGameClass {
+class flashGame {
   constructor(Name, Description, Ratings) {
     this.name = Name;
     this.description = Description;
