@@ -1,14 +1,12 @@
 "use strict";
-const fg = require("./fg.js");
-let flashGame = fg.flashGame;
 
 const LSKG = "app.games";
 
 let game = JSON.parse(localStorage.getItem(LSKG)) || [];
 
-game.forEach((flashGame) => {
-  flashGame.updateAverageRating();
-  flashGame.generateGameCard();
+game.forEach((element) => {
+  element.updateAverageRating();
+  element.generateGameCard();
 });
 
 let gameForm = document.querySelector("#gameForm");
@@ -39,9 +37,9 @@ gameForm.addEventListener("submit", (e) => {
 
 function updateGames() {
   save();
-  game.forEach((flashGame) => {
-    flashGame.updateAverageRating();
-    flashGame.generateGameCard();
+  game.forEach((element) => {
+    element.updateAverageRating();
+    element.generateGameCard();
   });
 }
 
