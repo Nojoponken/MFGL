@@ -43,14 +43,18 @@ let gfTitle = document.querySelector("#title");
 let gfDesc = document.querySelector("#description");
 let gfRating = document.querySelector("#rating");
 
-gameForm.addEventListener("submit", (e) =>){
-  if(gfTitle.value.trim() === "" || gfDesc.value.trim() === "" || gfRating.value.trim() === ""){    
+gameForm.addEventListener("submit", (e) => {
+  if (
+    gfTitle.value.trim() === "" ||
+    gfDesc.value.trim() === "" ||
+    gfRating.value.trim() === ""
+  ) {
     return;
   }
   game.push(new flashGame(gfTitle.value.trim(), gfDesc.value.trim()));
   gfTitle.value = "";
   gfDesc.value = "";
-}
+});
 
 game.forEach((flashGame) => {
   flashGame.updateAverageRating();
