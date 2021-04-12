@@ -19,7 +19,7 @@ function updateAvarageRating(item) {
 
 function removeGame(event) {
   let gameName = event.target.getAttribute("data-id");
-  newGames = newGames.filter((item) => item.name != gameName);
+  currentGames = currentGames.filter((item) => item.name != gameName);
   update();
   draw();
 }
@@ -44,9 +44,32 @@ function generateGameCard(item) {
   remButton.setAttribute("data-id", item.name);
   remButton.innerHTML = "Remove";
 
+  let form = document.createElement("form");
+  form.setAttribute("method", "GET");
+  form.setAttribute("class", "scoreForm");
+  let label = document.createElement("label");
+  label.innerHTML = "Rate";
+  label.setAttribute("for", item.name + "Rating");
+  let input = document.createElement("input");
+  input.setAttribute("type", "number");
+  input.setAttribute("class", "scoreInput");
+  input.setAttribute("id", item.name + "Rating");
+  input.setAttribute("min", 0);
+  input.setAttribute("max", 10);
+  input.setAttribute("required", "");
+  let send = document.createElement("button");
+  send.setAttribute("type", "submit");
+  send.setAttribute("data-id", item.name);
+  send.innerHTML = "submit";
+
+  form.append(label);
+  form.append(input);
+  form.append(send);
+
   card.append(title);
   card.append(text);
   card.append(score);
+  card.append(form);
   card.append(remButton);
 
   cardDiv.append(card);
@@ -54,15 +77,15 @@ function generateGameCard(item) {
 
 const LSKG = "app.game";
 
-let game = JSON.parse(localStorage.getItem(LSKG)) || [];
+let savedGames = JSON.parse(localStorage.getItem(LSKG)) || [];
 
-let newGames = [];
+let currentGames = [];
 
-game.forEach((item) => {
-  newGames.push(new flashGame(item.name, item.description, item.ratings));
+savedGames.forEach((item) => {
+  currentGames.push(new flashGame(item.name, item.description, item.ratings));
 });
 
-console.table(newGames);
+console.table(currentGames);
 
 // game.forEach((item) => {
 //   console.log(
@@ -75,6 +98,23 @@ console.table(newGames);
 
 update();
 draw();
+
+let cardForm = document.querySelectorAll(".scoreForm");
+
+cardForm.forEach((item) =>
+  item.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let name = $(e.target).children("button").attr("data-id");
+    let gamearr = currentGames.filter((item) => item.name == name);
+    let game = gamearr[0];
+    console.log(game);
+    console.log(name);
+    console.log($(e.target).children("Input").prop("value"));
+    game.ratings.push($(e.target).children("Input").prop("value"));
+    update();
+    draw();
+  })
+);
 
 let gameForm = document.querySelector("#gameForm");
 let gfTitle = document.querySelector("#title");
@@ -90,7 +130,7 @@ gameForm.addEventListener("submit", (e) => {
   ) {
     return;
   }
-  newGames.push(
+  currentGames.push(
     new flashGame(gfTitle.value.trim(), gfDesc.value.trim(), [
       gfRating.value.trim(),
     ])
@@ -108,11 +148,11 @@ function update() {
 
 function draw() {
   cardDiv.innerHTML = "";
-  newGames.forEach((item) => {
+  currentGames.forEach((item) => {
     generateGameCard(item);
   });
 }
 
 function save() {
-  localStorage.setItem(LSKG, JSON.stringify(newGames));
+  localStorage.setItem(LSKG, JSON.stringify(currentGames));
 }
