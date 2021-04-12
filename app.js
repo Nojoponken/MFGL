@@ -6,7 +6,7 @@ class flashGame {
     this.ratings = [Ratings];
     this.averageRating = 0.0;
   }
-  static generateGameCard() {
+  generateGameCard() {
     let card = document.createElement("div");
     card.setAttribute("id", "cardBody");
 
@@ -43,6 +43,19 @@ const LSKG = "app.game";
 
 let game = JSON.parse(localStorage.getItem(LSKG)) || [];
 
+game.forEach((item) => {
+  item = new flashGame(item.name, item.description, item.ratings);
+});
+
+// game.forEach((item) => {
+//   console.log(
+//     item.ratings.reduce((sum, current) => sum + current) / item.ratings.length
+//   );
+//   for (let property in item) {
+//     console.log(property + ": " + item[property]);
+//   }
+// });
+
 updateGames();
 
 let gameForm = document.querySelector("#gameForm");
@@ -73,9 +86,9 @@ gameForm.addEventListener("submit", (e) => {
 
 function updateGames() {
   save();
-  if (game.length >= 1) {
-    game[0].generateGameCard();
-  }
+  console.log(game);
+  let temp = new flashGame("test", "test test", [9]);
+  temp.generateGameCard();
 }
 
 function save() {
