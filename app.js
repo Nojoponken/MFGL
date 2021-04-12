@@ -1,51 +1,68 @@
 "use strict";
+
+const cardDiv = document.querySelector("#cardDiv");
+
 class flashGame {
   constructor(Name, Description, Ratings) {
     this.name = Name;
     this.description = Description;
-    this.ratings = [Ratings];
-    this.averageRating = 0.0;
+    this.ratings = Ratings;
+    this.averageRating = updateAvarageRating(this);
   }
-  generateGameCard() {
-    let card = document.createElement("div");
-    card.setAttribute("id", "cardBody");
+}
 
-    let title = document.createElement("h2");
-    title.setAttribute("id", "cardTitle");
-    title.innerHTML = this.name;
-    let text = document.createElement("p");
-    text.setAttribute("id", "cardText");
-    text.innerHTML = this.description;
-    let score = document.createElement("p");
-    score.setAttribute("id", "cardScore");
-    score.innerHTML = this.averageRating;
+function updateAvarageRating(item) {
+  return (
+    item.ratings.reduce((sum, current) => sum + current) / item.ratings.length
+  );
+}
 
-    card.appendChild(title);
-    card.appendChild(text);
-    card.appendChild(score);
+function removeGame(event) {
+  let gameName = event.target.getAttribute("data-id");
+  newGames = newGames.filter((item) => item.name != gameName);
+  update();
+  draw();
+}
 
-    document.getElementById("cardDiv").appendChild(card);
-  }
+function generateGameCard(item) {
+  let card = document.createElement("div");
+  card.setAttribute("class", "cardBody");
 
-  updateAverageRating() {
-    this.averageRating = 0;
-    this.ratings.forEach((int) => {
-      this.averageRating += int;
-    });
-    this.averageRating =
-      Math.round(
-        (this.averageRating / this.ratings.length + Number.EPSILON) * 10
-      ) / 10;
-  }
+  let title = document.createElement("h2");
+  title.setAttribute("class", "cardTitle");
+  title.innerHTML = item.name;
+  let text = document.createElement("p");
+  text.setAttribute("class", "cardText");
+  text.innerHTML = item.description;
+  let score = document.createElement("p");
+  score.setAttribute("class", "cardScore");
+  score.innerHTML = item.averageRating;
+
+  let remButton = document.createElement("button");
+  remButton.setAttribute("type", "button");
+  remButton.addEventListener("click", removeGame);
+  remButton.setAttribute("data-id", item.name);
+  remButton.innerHTML = "Remove";
+
+  card.append(title);
+  card.append(text);
+  card.append(score);
+  card.append(remButton);
+
+  cardDiv.append(card);
 }
 
 const LSKG = "app.game";
 
 let game = JSON.parse(localStorage.getItem(LSKG)) || [];
 
+let newGames = [];
+
 game.forEach((item) => {
-  item = new flashGame(item.name, item.description, item.ratings);
+  newGames.push(new flashGame(item.name, item.description, item.ratings));
 });
+
+console.table(newGames);
 
 // game.forEach((item) => {
 //   console.log(
@@ -56,7 +73,8 @@ game.forEach((item) => {
 //   }
 // });
 
-updateGames();
+update();
+draw();
 
 let gameForm = document.querySelector("#gameForm");
 let gfTitle = document.querySelector("#title");
@@ -64,6 +82,7 @@ let gfDesc = document.querySelector("#description");
 let gfRating = document.querySelector("#rating");
 
 gameForm.addEventListener("submit", (e) => {
+  e.preventDefault();
   if (
     gfTitle.value.trim() === "" ||
     gfDesc.value.trim() === "" ||
@@ -71,26 +90,29 @@ gameForm.addEventListener("submit", (e) => {
   ) {
     return;
   }
-  game.push(
-    new flashGame(
-      gfTitle.value.trim(),
-      gfDesc.value.trim(),
-      gfRating.value.trim()
-    )
+  newGames.push(
+    new flashGame(gfTitle.value.trim(), gfDesc.value.trim(), [
+      gfRating.value.trim(),
+    ])
   );
   gfTitle.value = "";
   gfDesc.value = "";
   gfRating.value = "";
-  updateGames();
+  update();
+  draw();
 });
 
-function updateGames() {
+function update() {
   save();
-  console.log(game);
-  let temp = new flashGame("test", "test test", [9]);
-  temp.generateGameCard();
+}
+
+function draw() {
+  cardDiv.innerHTML = "";
+  newGames.forEach((item) => {
+    generateGameCard(item);
+  });
 }
 
 function save() {
-  localStorage.setItem(LSKG, JSON.stringify(game));
+  localStorage.setItem(LSKG, JSON.stringify(newGames));
 }
