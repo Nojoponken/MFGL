@@ -12,9 +12,10 @@ class flashGame {
 }
 
 function updateAvarageRating(item) {
-  return (
-    item.ratings.reduce((sum, current) => sum + current) / item.ratings.length
-  );
+  return round(
+    item.ratings.reduce((sum, current) => sum + current) / item.ratings.length,
+    1
+  ).toFixed(1);
 }
 
 function removeGame(event) {
@@ -47,6 +48,7 @@ function generateGameCard(item) {
   let form = document.createElement("form");
   form.setAttribute("method", "GET");
   form.setAttribute("class", "scoreForm");
+  form.setAttribute("id", item.name);
   let label = document.createElement("label");
   label.innerHTML = "Rate";
   label.setAttribute("for", item.name + "Rating");
@@ -73,6 +75,18 @@ function generateGameCard(item) {
   card.append(remButton);
 
   cardDiv.append(card);
+
+  document.getElementById(item.name).addEventListener("submit", (e) => {
+    e.preventDefault();
+    let name = $(e.target).children("button").attr("data-id");
+    let gamearr = currentGames.filter((item) => item.name == name);
+    let game = gamearr[0];
+    console.log(game);
+    console.log(name);
+    console.log($(e.target).children("Input").prop("value"));
+    game.ratings.push(parseFloat($(e.target).children("Input").prop("value")));
+    update();
+  });
 }
 
 const LSKG = "app.game";
@@ -85,41 +99,16 @@ savedGames.forEach((item) => {
   currentGames.push(new flashGame(item.name, item.description, item.ratings));
 });
 
-console.table(currentGames);
-
-// game.forEach((item) => {
-//   console.log(
-//     item.ratings.reduce((sum, current) => sum + current) / item.ratings.length
-//   );
-//   for (let property in item) {
-//     console.log(property + ": " + item[property]);
-//   }
-// });
-
-update();
-draw();
-
 let cardForm = document.querySelectorAll(".scoreForm");
-
-cardForm.forEach((item) =>
-  item.addEventListener("submit", (e) => {
-    e.preventDefault();
-    let name = $(e.target).children("button").attr("data-id");
-    let gamearr = currentGames.filter((item) => item.name == name);
-    let game = gamearr[0];
-    console.log(game);
-    console.log(name);
-    console.log($(e.target).children("Input").prop("value"));
-    game.ratings.push($(e.target).children("Input").prop("value"));
-    update();
-    draw();
-  })
-);
 
 let gameForm = document.querySelector("#gameForm");
 let gfTitle = document.querySelector("#title");
 let gfDesc = document.querySelector("#description");
 let gfRating = document.querySelector("#rating");
+
+console.table(currentGames);
+
+update();
 
 gameForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -132,18 +121,21 @@ gameForm.addEventListener("submit", (e) => {
   }
   currentGames.push(
     new flashGame(gfTitle.value.trim(), gfDesc.value.trim(), [
-      gfRating.value.trim(),
+      parseFloat(gfRating.value.trim()),
     ])
   );
   gfTitle.value = "";
   gfDesc.value = "";
   gfRating.value = "";
   update();
-  draw();
 });
 
 function update() {
+  currentGames.forEach((item) => {
+    item.averageRating = updateAvarageRating(item);
+  });
   save();
+  draw();
 }
 
 function draw() {
@@ -155,4 +147,9 @@ function draw() {
 
 function save() {
   localStorage.setItem(LSKG, JSON.stringify(currentGames));
+}
+
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
 }
