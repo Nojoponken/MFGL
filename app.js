@@ -41,6 +41,7 @@ function generateGameCard(item) {
 
   let remButton = document.createElement("button");
   remButton.setAttribute("type", "button");
+  remButton.setAttribute("class", "remButton");
   remButton.addEventListener("click", removeGame);
   remButton.setAttribute("data-id", item.name);
   remButton.innerHTML = "Remove";
