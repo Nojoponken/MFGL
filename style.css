@@ -86,9 +86,6 @@ h2 {
 	font-family: Cedar;
 }
 
-#gameForm {
-}
-
 #gameForm > * > * {
 	font-family: Cedar;
 	display: flex;
