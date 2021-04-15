@@ -1,107 +1,107 @@
 @font-face {
-  font-family: Cedar;
-  src: url("Cedar_Round.otf");
+	font-family: Cedar;
+	src: url("resources/Cedar_Round.otf");
 }
 
 body {
-  padding-left: 5%;
-  padding-right: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
 }
 
 h1 {
-  font-family: Cedar;
-  color: rgb(204, 23, 32);
+	font-family: Cedar;
+	color: rgb(204, 23, 32);
 }
 
 nav {
-  font-family: sans-serif;
-  font-weight: bold;
-  display: flex;
-  justify-content: left;
-  background-color: rgb(204, 23, 32);
-  padding: 1vh;
-  padding-right: 1vh;
+	font-family: sans-serif;
+	font-weight: bold;
+	display: flex;
+	justify-content: left;
+	background-color: rgb(204, 23, 32);
+	padding: 1vh;
+	padding-right: 1vh;
 }
 
 nav a {
-  color: white;
-  margin-right: 1%;
-  font-size: 2vh;
+	color: white;
+	margin-right: 1%;
+	font-size: 2vh;
 }
 
 .cardBody {
-  background-color: rgb(228, 228, 228);
-  border-radius: 1vh;
-  margin: 2vh;
-  padding: 2vh;
+	background-color: rgb(228, 228, 228);
+	border-radius: 1vh;
+	margin: 2vh;
+	padding: 2vh;
 }
 
 .cardTitle {
-  font-family: Cedar;
-  font-weight: normal;
-  font-size: 30px;
-  color: rgb(204, 23, 32);
-  margin: 0;
+	font-family: Cedar;
+	font-weight: normal;
+	font-size: 30px;
+	color: rgb(204, 23, 32);
+	margin: 0;
 }
 
 .cardText {
-  font-family: Cedar;
-  font-weight: lighter;
-  color: rgb(204, 23, 32);
+	font-family: Cedar;
+	font-weight: lighter;
+	color: rgb(204, 23, 32);
 }
 
 .cardScore {
-  font-family: sans-serif;
-  font-weight: 900;
-  background-color: rgb(36, 110, 185);
-  max-width: fit-content;
-  padding: 1.5vh;
-  border-radius: 1vh;
-  color: white;
+	font-family: sans-serif;
+	font-weight: 900;
+	background-color: rgb(36, 110, 185);
+	max-width: fit-content;
+	padding: 1.5vh;
+	border-radius: 1vh;
+	color: white;
 }
 
 .remButton {
-  color: white;
-  font-family: Cedar;
-  margin: 1vh;
-  border-radius: 100vh;
-  border-color: rgb(204, 23, 32);
-  background-color: rgb(204, 23, 32);
-  padding: 1vh;
+	color: white;
+	font-family: Cedar;
+	margin: 1vh;
+	border-radius: 100vh;
+	border-color: rgb(204, 23, 32);
+	background-color: rgb(204, 23, 32);
+	padding: 1vh;
 }
 
 .scoreForm > * {
-  margin-right: 1vh;
-  font-family: Cedar;
+	margin-right: 1vh;
+	font-family: Cedar;
 }
 
 .scoreForm button {
-  border-radius: 10vh;
-  border-color: rgb(36, 110, 185);
-  background-color: rgb(36, 110, 185);
-  color: white;
+	border-radius: 10vh;
+	border-color: rgb(36, 110, 185);
+	background-color: rgb(36, 110, 185);
+	color: white;
 }
 
 h2 {
-  font-family: Cedar;
+	font-family: Cedar;
 }
 
 #gameForm {
 }
 
-#gameForm > * > *{
- font-family: Cedar;
- display: flex;
- margin-left: 1vh;
+#gameForm > * > * {
+	font-family: Cedar;
+	display: flex;
+	margin-left: 1vh;
 }
 
 .formButton {
-  margin: 1vh;
-  font-family: Cedar;
-  border-color: rgb(228, 228, 228);
-  border-radius: 10vh;
+	margin: 1vh;
+	font-family: Cedar;
+	border-color: rgb(228, 228, 228);
+	border-radius: 10vh;
 }
 
 img {
-  max-width: 30%;
+	max-width: 30%;
 }
